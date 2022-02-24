@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
+use App\Models\Demo;
 class DemoController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -15,6 +16,13 @@ class DemoController extends BaseController
     public function index(Request $request)
     {
 
+        $rule = [ 
+            'id' => ['required'],
+            'name' => ['required']
+        ];
+        $msg = [
+            'id.required'=>'ID不能为空'
+        ];
         try {
             $request->validate([
                 'id' => ['required'],
@@ -26,6 +34,6 @@ class DemoController extends BaseController
         } catch (\Illuminate\Validation\ValidationException $th) {
             return $this->jsonError($th->validator->errors()->first());
         }
-
+        
     }
 }
